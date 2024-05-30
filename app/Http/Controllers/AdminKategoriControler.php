@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kategori;
 use Illuminate\Http\Request;
 
 class AdminKategoriControler extends Controller
@@ -26,6 +27,12 @@ class AdminKategoriControler extends Controller
     public function create()
     {
         //
+        $data = [
+            'title' => 'Tambah Kategori',
+            'content' => '/admin/kategori/create'
+
+        ];
+        return view('admin.layout.wrapper', $data);
     }
 
     /**
@@ -34,6 +41,11 @@ class AdminKategoriControler extends Controller
     public function store(Request $request)
     {
         //
+        $data = $request->validate([
+            'name' => 'required|unique:kategoris'
+        ]);
+        kategori::create($data);
+        return redirect()->back();
     }
 
     /**

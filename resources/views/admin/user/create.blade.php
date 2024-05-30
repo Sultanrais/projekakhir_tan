@@ -11,50 +11,50 @@
                         @method('put')
                         @else
                         <form action="/admin/user" method="POST">
-                        @endisset
+                            @endisset
 
-                        <form action="/admin/user" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                <label for=""><b>Nama Lengkap</b></label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Nama Lengkap" value=" {{isset($user) ?  $user->name : '' }}" id="">
+                            <form action="/admin/user" method="POST">
+                                @csrf
+                                <div class="form-group">
+                                    <label for=""><b>Nama Lengkap</b></label>
+                                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" placeholder="Nama Lengkap" value=" {{isset($user) ?  $user->name : '' }}" id="">
 
-                                @error('name')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                                    @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for=""><b>Email</b></label>
-                                <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value=" {{isset($user) ?  $user->email : '' }}" id="">
-                                @error('email')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                                <div class="form-group">
+                                    <label for=""><b>Email</b></label>
+                                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" placeholder="Email" value=" {{isset($user) ?  $user->email : '' }}" id="">
+                                    @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for=""><b>Password</b></label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" id="">
-                                @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                                <div class="form-group">
+                                    <label for=""><b>Password</b></label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" id="">
+                                    @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for=""><b>Konfirmasi Password</b></label>
-                                <input type="password" class="form-control @error('password') is-invalid @enderror" name="re_password" placeholder="Password" id="">
-                                @error('password')
-                                <div class="invalid-feedback">
-                                    {{ $message }}
+                                <div class="form-group">
+                                    <label for=""><b>Konfirmasi Password</b></label>
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="re_password" placeholder="Password" id="">
+                                    @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
-                                @enderror
-                            </div>
-                            <a href="/admin/user" class="btn btn-secondary"><i class="fas fa-arrow-left">Kembali</i></a>
-                            <button type="submit" class="btn btn-primary">Simpan</button>
-                        </form>
+                                <a href="/admin/user" class="btn btn-secondary"><i class="fas fa-arrow-left">Kembali</i></a>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </form>
                 </div>
             </div>
         </div>

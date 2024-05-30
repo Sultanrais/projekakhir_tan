@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\kategori;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminKategoriControler extends Controller
 {
@@ -15,6 +16,7 @@ class AdminKategoriControler extends Controller
         //
         $data = [
             'title' => 'Manajemen Kategori',
+            'kategori' => kategori::paginate(10),
             'content' => '/admin/kategori/index'
 
         ];
@@ -45,6 +47,7 @@ class AdminKategoriControler extends Controller
             'name' => 'required|unique:kategoris'
         ]);
         kategori::create($data);
+        Alert::success('Sukses', 'Data Berhasil Di Tambahkan');
         return redirect()->back();
     }
 
@@ -54,6 +57,7 @@ class AdminKategoriControler extends Controller
     public function show(string $id)
     {
         //
+       
     }
 
     /**
@@ -62,6 +66,13 @@ class AdminKategoriControler extends Controller
     public function edit(string $id)
     {
         //
+        $data = [
+            'title' => 'Tambah Kategori',
+            'kategori' => kategori::find($id),
+            'content' => '/admin/kategori/create'
+
+        ];
+        return view('admin.layout.wrapper', $data);
     }
 
     /**
@@ -70,6 +81,13 @@ class AdminKategoriControler extends Controller
     public function update(Request $request, string $id)
     {
         //
+        $kategori = kategori::find($id);
+        $data = $request->validate([
+            'name' => 'required|unique:kategoris,name' . $kategori->id
+        ]);
+        $kategori->update($data);
+        Alert::success('Sukses', 'Data Berhasil Diedit');
+        return redirect()->back();
     }
 
     /**
@@ -78,5 +96,9 @@ class AdminKategoriControler extends Controller
     public function destroy(string $id)
     {
         //
+        $kategori = kategori::find($id);
+        $kategori-> delete();
+        Alert::success('Sukses', 'Data Berhasil Dihapus');
+        return redirect()->back();
     }
 }

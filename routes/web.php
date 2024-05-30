@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminKategoriControler;
+use App\Http\Controllers\AdminProdukController;
 use App\Http\Controllers\AdminUserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -17,15 +18,14 @@ Route::get('/', function () {
     ];
     return view('admin.layout.wrapper', $data);
 });
-route::prefix('/admin')->group(function (){
-Route::get('/dashboard', function(){
-    $data = [
-        'content' => 'admin.dashboard.index'
-    ];
-    return view('admin.layout.wrapper', $data);
-
-})->middleware('auth');
-Route::resource('/kategori', AdminKategoriControler::class);
-    Route::resource('/user',AdminUserController::class);
+route::prefix('/admin')->group(function () {
+    Route::get('/dashboard', function () {
+        $data = [
+            'content' => 'admin.dashboard.index'
+        ];
+        return view('admin.layout.wrapper', $data);
+    })->middleware('auth');
+    Route::resource('/produk', AdminProdukController::class);
+    Route::resource('/kategori', AdminKategoriControler::class);
+    Route::resource('/user', AdminUserController::class);
 });
-

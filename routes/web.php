@@ -25,6 +25,7 @@ route::prefix('/admin')->group(function () {
         ];
         return view('admin.layout.wrapper', $data);
     })->middleware('auth');
+    
     Route::resource('/produk', AdminProdukController::class);
     Route::resource('/kategori', AdminKategoriControler::class);
     Route::resource('/user', AdminUserController::class);

@@ -86,6 +86,7 @@ if ($request->hasFile('gambar')){
         $data = [
             'title' => 'Tambah Produk',
             'produk' => Produk::find($id),
+            'kategori' => kategori::get(),
             'content' => '/admin/produk/create'
 
         ];
@@ -100,8 +101,23 @@ if ($request->hasFile('gambar')){
         //
         $produk = Produk::find($id);
         $data = $request->validate([
-            'name' => 'required|unique:produks,name' . $produk->id
+            'name' => 'required',
+            'kategori_id' => 'required',
+            'harga' => 'required',
+            'stock' => 'required',
         ]);
+
+        if ($request->hasFile('gambar')){
+            $gambar = $request->file('gambar');
+            $file_name = time(). "_". $gambar->getClienOriginalName();
+        
+            $storage = 'uploads/images/';
+            $gambar->move($storage, $file_name);
+            $data['gambar'] = $storage . $file_name;
+        }else{
+            $data['gambar'] = $produk->gambar;
+        }
+
         $produk->update($data);
         Alert::success('Sukses', 'Data Berhasil Diedit');
         return redirect()->back();
@@ -113,7 +129,12 @@ if ($request->hasFile('gambar')){
     public function destroy(string $id)
     {
         //
+
         $produk = Produk::find($id);
+        if ($produk->gambar != null){
+            unlink($produk->gambar);
+
+        }
         $produk-> delete();
         Alert::success('Sukses', 'Data Berhasil Dihapus');
         return redirect()->back();

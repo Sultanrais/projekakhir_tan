@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminKategoriControler;
 use App\Http\Controllers\AdminProdukController;
+use App\Http\Controllers\AdminTransaksiController;
 use App\Http\Controllers\AdminUserController;
 use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,7 @@ route::prefix('/admin')->group(function () {
         return view('admin.layout.wrapper', $data);
     })->middleware('auth');
     
+    Route::resource('/transaksi', AdminTransaksiController::class);
     Route::resource('/produk', AdminProdukController::class);
     Route::resource('/kategori', AdminKategoriControler::class);
     Route::resource('/user', AdminUserController::class);

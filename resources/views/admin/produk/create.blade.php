@@ -27,7 +27,7 @@
                         <select name="kategori_id" class="form-control @error('kategori_id') is-invalid @enderror" id="">
                             <option value="">-- Kategori --</option>
                             @foreach ($kategori as $item)
-                            <option value="{{$item->id}}">{{$item->name}}</option>
+                            <option value="{{$item->id}}"{{isset($produk) ?$item->id == $produk->kategori_id ? 'selected' : '' : ''}}>  {{$item->name}}</option>
 
                             @endforeach
                         </select>
@@ -65,11 +65,17 @@
                             {{ $message }}
                         </div>
                         @enderror
+                        
+                        @isset($produk)
+    <img src="/{{$produk->gambar}}" width="100px" alt="">
+@endisset
+<br>
+
+<a href="/admin/produk" class="btn btn-info mt-2"><i class="fas fa-arrow-left"></i>Kembali</a>
+<button type="submit" class="btn btn-primary mt2"><i class="fas fa-save"></i>Simpan</button>
 
 
-
-                        <a href="/admin/produk" class="btn btn-info mt-2"><i class="fas fa-arrow-left"></i>Kembali</a>
-                        <button type="submit" class="btn btn-primary mt2"><i class="fas fa-save"></i>Simpan</button>
+                       
 
                     </form>
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Produk;
 use App\Models\Transaksi;
+use App\Models\TransaksiDetail;
 use Illuminate\Http\Request;
 
 class AdminTransaksiController extends Controller
@@ -46,9 +47,38 @@ class AdminTransaksiController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
+{
+    try {
+        // Validate request data if necessary
+        // $request->validate([...]);
+
+        // Buat data untuk transaksi baru
+        $data = [
+            'user_id' => auth()->user()->id,
+            'kasir_name' => auth()->user()->name,
+            'total' => 0
+        ];
+
+        // Buat objek transaksi
+        $transaksi = Transaksi::create($data);
+
+        // Periksa apakah transaksi berhasil dibuat
+        if ($transaksi) {
+            // Redirect ke halaman edit transaksi yang baru
+            return redirect('/admin/transaksi/' . $transaksi->id . '/edit');
+        } else {
+            // Penanganan kesalahan jika pembuatan transaksi gagal
+            return back()->with('error', 'Gagal membuat transaksi.');
+        }
+    } catch (\Exception $e) {
+        // Penanganan kesalahan jika terjadi pengecualian
+        return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
     }
+}
+
+
+    
+    
 
     /**
      * Display the specified resource.
@@ -68,6 +98,8 @@ class AdminTransaksiController extends Controller
 
         $produk_id = request('produk_id');
         $p_detail = Produk::find($produk_id);
+
+        $transaksi_detail = TransaksiDetail::WhereTransaksiId($id)->get();
 
         $act = request('act');
         $qty = request('qty');
@@ -93,6 +125,7 @@ if($p_detail){
             'p_detail' => $p_detail,
             'qty' => $qty,
             'subtotal' => $subtotal,
+            'transaksi_detail' => $transaksi_detail,
             'content' => '/admin/transaksi/create'
 
         ];
